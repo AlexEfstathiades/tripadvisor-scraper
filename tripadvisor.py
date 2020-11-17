@@ -88,17 +88,27 @@ class Tripadvisor:
 
     #TO DO: lang parameter
     def set_language(self, url, lang='ALL'):
-        self.driver.get(url)
+        #self.driver.get(url)
         self.driver.find_element_by_xpath('//label[@for=\'LanguageFilter_0\']').click()
         time.sleep(5)
 
         return 0
+    def accept_cookies(self, url):
+        self.driver.get(url)
+        try:
+            #self.driver.get(url)
+            self.driver.find_element_by_xpath('//button[@id=\'_evidon-accept-button\']').click()
+
+            time.sleep(5)
+        except:
+            print("no evidon button :(")
+
 
 
     def get_reviews(self, page):
 
         if page > 1:
-            self.driver.find_element_by_xpath('//a[@class=\'pageNum cx_brand_refresh_phase2 \' and contains(text(), {})]'.format(page)).click()
+            self.driver.find_element_by_xpath('//a[@class=\'pageNum \' and contains(text(), {})]'.format(page)).click()
             time.sleep(2)
 
             # some pages have automatic translation
@@ -147,7 +157,13 @@ class Tripadvisor:
             caption = self.__filter_string(review_inner.find('q', class_='IRsGHoPm').text)
 
             # date of experience
-            date_exp = review_inner.find('span', class_='_34Xs-BQm').text.split(':')[1]
+            date_exp = None
+            try:
+
+                date_exp = review_inner.find('span', class_='_34Xs-BQm').text.split(':')[1]
+            except:
+                date_exp = "N/A"
+            print(date_exp)
             item = {
                 'id_review': id_review,
                 'title': title,

@@ -3,6 +3,8 @@
 from tripadvisor import Tripadvisor
 import argparse
 import csv
+import random as rand
+import time
 
 HEADER = ['id_review', 'title', 'caption', 'rating', 'timestamp', 'username', 'userlink', 'n_review_user', 'location', 'n_votes_review', 'date_of_experience']
 PLACE_HEADER = ['id', 'name', 'reviews', 'rating', 'address', 'ranking_string', 'ranking_pos', 'tags', 'ranking_length', 'url']
@@ -45,12 +47,15 @@ if __name__ == '__main__':
         else:
             with open(args.i, 'r') as urls_file:
                 for url in urls_file:
+                #try:
 
+                    scraper.accept_cookies(url)
                     scraper.set_language(url)
 
                     n = 0
                     pag = 1
                     while n < args.N:
+                        time.sleep(rand.randint(0,4))
                         reviews = scraper.get_reviews(pag)
 
                         for r in reviews:
@@ -58,3 +63,7 @@ if __name__ == '__main__':
 
                         n += len(reviews)
                         pag += 1
+                #except Exception as e:
+                    #print(e)
+                    #print("hello")
+                    #print(scraper.driver.page_source)
