@@ -89,7 +89,7 @@ class Tripadvisor:
     #TO DO: lang parameter
     def set_language(self, url, lang='ALL'):
         #self.driver.get(url)
-        self.driver.find_element_by_xpath('//label[@for=\'LanguageFilter_0\']').click()
+        self.driver.find_element_by_xpath('//label[@for=\'LanguageFilter_1\']').click()
         time.sleep(5)
 
         return 0
