@@ -94,6 +94,7 @@ class Tripadvisor:
 
         return 0
     def accept_cookies(self, url):
+        # added to get past the cookie banner, will try and except if no banner exists
         self.driver.get(url)
         try:
             #self.driver.get(url)
@@ -101,7 +102,7 @@ class Tripadvisor:
 
             time.sleep(5)
         except:
-            print("no evidon button :(")
+            print("no evidon button")
 
 
 
